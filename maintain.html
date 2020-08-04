@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<title>维护本网站</title>
+</head>
+<body>
+<table summary="Table for page layout." id="tlayout">
+<tr valign="top">
+<td id="layout-menu">
+<div class="menu-category">协同计算研究所</div>
+<div class="menu-item"><a href="index.html">主页</a></div>
+<div class="menu-item"><a href="student.html">实验室成员</a></div>
+<div class="menu-item"><a href="discussion.html">组会</a></div>
+<div class="menu-category">资料</div>
+<div class="menu-item"><a href="ccf.html">学术论文相关</a></div>
+<div class="menu-item"><a href="ml.html">机器学习</a></div>
+<div class="menu-item"><a href="lab.html">实验室日常资料</a></div>
+<div class="menu-item"><a href="newperson.html">新人手册</a></div>
+<div class="menu-item"><a href="maintain.html">维护本网站</a></div>
+<div class="menu-category">活动</div>
+</td>
+<td id="layout-content">
+<div id="toptitle">
+<h1>维护本网站</h1>
+</div>
+<h2>关于本网站</h2>
+<p>本网站基于<a href="http://jemdoc.jaboc.net/index.html">jemdoc</a>模板修改定制，服务器采用<a href="http://nginx.org/">Nginx</a>代理。
+服务器地址：59.78.194.17(老服务器)，开放端口8080。</p>
+<div class="infoblock">
+<div class="blockcontent">
+<p>网站文件目录地址: /home/lab1008。</p>
+<p>Nginx目录：/usr/local/server/nginx ， 已设置开机自启动。</p>
+<p>nginx常用命令</p>
+<p>停止: ./nginx -s quit</p>
+<p>启东 ./nginx</p>
+</div></div>
+<h2>如何修改本网页</h2>
+<p>直接修改对应模块的jemdoc文件，语法符合jemdoc规范，规范参见<a href="http://jemdoc.jaboc.net/example.html">jemdoc example</a>。
+修改完，运行 jemdoc xxxx.jemdoc，即可生成对应的xxxx.html文件。
+模块与网页对应关系：</p>
+<div class="infoblock">
+<div class="blockcontent">
+<ul>
+<li><p>主页  index.jemdoc</p>
+</li>
+<li><p>实验室成员 student.jemdoc</p>
+</li>
+<li><p>组会 discussion.jemdoc</p>
+</li>
+<li><p>学术论文相关 ccf.jemodc</p>
+</li>
+<li><p>机器学习 ml.jemdoc</p>
+</li>
+<li><p>实验室日常资料 lab.jemdoc</p>
+</li>
+<li><p>新人手册 newperson.jemdoc</p>
+</li>
+<li><p>维护本网站 maintain.jemdoc</p>
+</li>
+</ul>
+</div></div>
+<h2>如何新增网页</h2>
+<p>当想新增加网页时，只需新建一个jemdoc文件，比如test.jemdoc，放到/home/lab1008目录下，使用符合jemdoc的语法规范编写网页内容。
+编写完毕后，修改MENU文件(/home/lab1008/MENU)，把自己新增加的网页名称(test.html)添加进去。然后运行以下两步：</p>
+<div class="infoblock">
+<div class="blockcontent">
+<ol>
+<li><p>jemdoc index.jemdoc</p>
+</li>
+</ol>
+<ol>
+<li><p>jemdoc test.jemdoc</p>
+</li>
+</ol>
+</div></div>
+<p>为了防止缓存现象存在，当修改MENU后，我建议全部重新生成html文件。可用以下命令：</p>
+<div class="infoblock">
+<div class="blockcontent">
+<ol>
+<li><p>删除html网页 rm -rf *.html</p>
+</li>
+</ol>
+<ol>
+<li><p>重新生成html网页 jemdoc *.jemdoc</p>
+</li>
+</ol>
+</div></div>
+<h2>备份</h2>
+<p>为了防止老服务器出现任何意外，导致网站内容丢失，已设置自动定期备份本网站到新服务上，如老服务器出现意外，可到新服务器上取备份内容。</p>
+<div class="infoblock">
+<div class="blockcontent">
+<p>备份机制：每周一凌晨6点会自动备份到新服务器上。</p>
+<p>新服务器目录：/home/lab1008_old_backup</p>
+<p>文件命名：lab1008_备份时间.tar.gz，如：lab1008_20191104.tar.gz</p>
+<p>同时新服务器会每周一8点会自动扫描/home/lab1008_old_backup目录删除过期备份内容，只保留最新一份的备份内容。</p>
+<p>备份脚本(老服务器)：/home/backup.sh</p>
+<p>删除过期文件脚本(新服务器上): /home/delete.sh</p>
+<p>配置定期执行脚本命令，crontab -e 进入编辑，添加定期计划。</p>
+<p>crontab -l 可查看本服务器上已有哪些定期进程。</p>
+<p>查看日志：</p>
+<p>如若定时任务没有执行或者出错，可去查看crontab日志，命令: tail -n 100 /var/log/cron, 也可加一些关键词过滤只看相关的日志，命令：tail -n 100 /var/log/cron | grep -E &ldquo;sh&rdquo;</p>
+</div></div>
+<div id="footer">
+<div id="footer-text">
+Page generated 2020-05-28 13:10:21 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>
